@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# PING computer.org (63.84.220.193): 56 data bytes
+# PING acm.org (63.118.7.35): 56 data bytes
+# PING ieee.org (140.98.193.141): 56 data bytes
+# PING arxive.org (64.255.6.200): 56 data bytes
+# PING w3c.org (128.30.52.45): 56 data bytes
+# PING europa.eu (147.67.119.2): 56 data bytes
+# PING bbc.com (212.58.253.68): 56 data bytes
+# PING economist.com (216.35.68.215): 56 data bytes
+# PING scientificamerican.com (216.68.232.21): 56 data bytes
+# PING cia.gov (198.81.129.136): 56 data bytes
+# PING nsa.gov (12.110.110.204): 56 data bytes
+
+export QUADS="127.0.0.1 63.84.220.193 63.118.7.35 140.98.193.141 64.255.6.200 128.30.52.45 147.67.119.2 212.58.253.68 216.35.68.215 216.68.232.21 198.81.129.136 12.110.110.204"
+
+for Q in $QUADS; do
+    printf "%-15s " $Q
+    ./dquad-hex $Q | xargs ./proquint
+done

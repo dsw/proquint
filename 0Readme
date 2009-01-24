@@ -1,0 +1,25 @@
+
+                              Proquints:
+                    Identifiers that are Readable,
+                     Spellable, and Pronounceable
+
+                         Daniel S. Wilkerson
+                            9 January 2009
+
+Welcome!
+
+The C program proquint.c converts between proquint, hex, and decimal
+strings.  It compiles to the executable proquint; just type "make".
+
+The Perl program dquad-hex converts between dotted-quads and hex
+strings.  It is used in testing proquint.
+
+Run "make clean all check" to build and check everything.  After that
+you can run "make demo" for a simple demo and "make examples" for more
+examples.
+
+See License.txt for copyright and terms of use.
+
+Enjoy.
+
+  -- Daniel

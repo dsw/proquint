@@ -1,0 +1,43 @@
+#!/usr/bin/perl -w
+# -*-perl-*-
+
+# This file is part of proquint.  See License.txt for copyright and
+# terms of use.
+
+# Convert between dotted quads and hex.
+# Daniel S. Wilkerson
+
+use strict;
+
+for my $arg (@ARGV) {
+    my $val;
+    if ($arg =~ m/^(\d+)\.(\d+)\.(\d+)\.(\d+)$/) {
+#         warn "parsing dotted quad\n";
+        $val =
+            ($1 * 256 * 256 * 256) +
+            ($2 * 256 * 256) +
+            ($3 * 256) +
+            ($4);
+        # I still don't know how to use pack!
+#         my $val2 = int pack("HHHH", $1, $2, $3, $4);
+#         die unless $val == $val2;
+        printf("x%x ", $val);
+    } elsif ($arg =~ m/^x([[:xdigit:]]+)$/) {
+#         warn "parsing hex word\n";
+        $val = hex($1);
+        my $x4 = $val % 256;
+        $val -= $x4; $val >>= 8;
+        my $x3 = $val % 256;
+        $val -= $x3; $val >>= 8;
+        my $x2 = $val % 256;
+        $val -= $x2; $val >>= 8;
+        my $x1 = $val % 256;
+        $val -= $x1; $val >>= 8;
+        die unless $val == 0;
+        print("$x1.$x2.$x3.$x4 ");
+    } else {
+        die "Not a dotted quad not a hex number.\n";
+    }
+}
+
+printf("\n");
