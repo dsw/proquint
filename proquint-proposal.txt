@@ -1,0 +1,401 @@
+= A Proposal for Proquints: Identifiers that are Readable, Spellable, and Pronounceable
+Daniel Shawcross Wilkerson
+version 1.0, 26 January 2009
+
+////////
+Note that this document is marked up in AsciiDoc:
+http://www.methods.co.nz/asciidoc/
+////////
+
+Identifiers (IDs) are pervasive throughout our modern life.  We
+suggest that these IDs would be easier to manage and remember if they
+were easily readable, spellable, and pronounceable.  As a solution to
+this problem we propose using PRO-nouncable QUINT-uplets of
+alternating unambiguous consonants and vowels: _proquints_.
+
+== Introduction
+
+Our life is full of identifying numbers.  However the number-ness of
+these numbers is irrelevant.  A credit-card number is not a _number_
+exactly -- when was the last time you did arithmetic on one?  Mostly
+these numbers are _identifiers_: their only function is to be unique.
+The problem is, they are getting longer as the world of things that
+must be uniquely identified gets larger: the number of things goes up,
+previously disjoint contexts merge, and history gets longer.
+
+ * Dotted quads IP addresses, e.g. 127.0.0.1, will soon (someday?),
+   with IPv6, be twice as long.
+
+ * Eight hex-digit Memory addresses, e.g. 0xF074B0CD, will soon, with
+   64-bit machines, be twice as long.
+
+ * Nine-digit Social security numbers are already being re-used with
+   obvious attendant problems.
+
+Most codes are designed to maximize information density.  Humans often
+must manipulate identifiers personally and there are therefore other
+dimensions to the problem that should also be considered.  Here our
+goal here is not to have a narrow, "vertical", solution that is
+optimized for only one dimension, such as information density, but a
+broad "horizontal" solution that is a good solution for _all_ of the
+relevant concerns, especially those of _humans_.
+
+In general what would help the humans would be if IDs were not only
+unique, but were also that are readable, spellable, and pronounceable
+and just generally convenient for a human to use -- as well as being a
+reasonably efficient information encoding.  We therefore propose
+PRO-nouncable QUINT-uplets of alternating unambiguous consonants and
+vowels, or "proquints", as the solution.
+
+In this essay we first derive an initial naive solution from the
+relevant concerns.  Next we review other aspects of human interaction
+with the solution and thereby derive the details.  We then compute the
+information density of the solution.  Finally we summarize the
+resulting protocol.
+
+== Distinguishable Available Sounds and Symbols
+
+There is only so much Shannon entropy *[Shannon-1948, Shannon-1949,
+Shannon-1993, Shannon-1951]* you can get by pushing air through
+flapping organs originally purposed for eating and breathing.  We
+assume it best to re-use the method to which natural language has
+already converged.
+
+Our initial idea is to encode numbers as strings of alternating
+phonetically-unambiguous consonants and vowels.
+http://www.antimoon.com/how/pronunc-soundsipa.htm[There seem to be]
+*[pronounce]* 24 consonants and 20 vowels in English.
+http://en.wikipedia.org/wiki/English_pronunciation[It gets more
+complex] *[pronounce2]* if you look more carefully.
+
+Some consonants are too hard to encode or to hear the difference
+between.  There are 16 unambiguous 1-letter consonants (omitting what
+we consider to be the wrongly-categorized letter "r"):
+........
+    b d f g h j k l m n p s t v w z,
+........
+
+and 3 more two-letter:
+........
+    sh ch th.
+........
+
+Having 16 sounds gives 4 bits right there and all in a
+single-character spelling, so we think sticking to the above
+one-letter consonants is good.
+
+There are 6 unambiguous 1-letter vowels (again disagreeing with the
+categorization of the letter "r"):
+........
+    a e i o u r.
+........
+
+If we just had two more vowels we would have 8 sounds or 3 bits.  Then
+we could use consonant-vowel order (reversing the pair) or stress
+(indicated by, say, a capital letter) to get one more bit.  This would
+yield a total of 8 bits for a consonant-vowel pair.
+
+== Serving Multiple Human Constraints
+
+Recall that the proquint goals are multiple and include readability
+and spellability and just general convenience and general fitness to
+the problem: this is a system to used by humans who do not like
+complexity.
+
+Therefore we think it is important to make the textual encoding of the
+sounds simple, by
+
+  * writing all proquints using the same character width,
+
+  * not introducing case differences to encode information, and
+
+  * not using non-alpha chars to encode other vowels (@ for the "a" in
+    "at").
+
+Further, a simple (C=consonant, V=vowel) CVCVC
+pronounceable-five-group or "proquint" feels right as a word.  In
+fact, we can get rid of two of the vowels, say "e" and "r", and still
+encode 2 bits in one vowel.  This method makes the information
+contained in one proquint a convenient number:
+
+........
+    (log2 (* 16.0 4.0 16.0 4.0 16.0))
+    16.0
+........
+
+So four proquints suffices to encode 64 bits and two suffice for 32
+bits.  We wonder why IP addresses aren't encoded this way -- they sure
+would be easier to remember.
+
+Since one may also want to fall back on saying each letter separately
+and therefore each should likely be a single syllable in English, we
+eliminate "w", which as previously-mentioned was a source of ambiguity
+already.  In its place we promote "r" to a consonant.
+
+Getting rid of ambiguities between vowels is a good idea for making
+this system more international, though there are persistent
+difficulties: Japanese have difficulty distinguishing "l" and "r",
+Hungarians have difficulty pronouncing "w", and "l" can easily sound
+like a "w" (a mutation occurring in the history of my middle name).
+My proof-readers have sent me many more examples from other languages
+-- attempting to eliminate all such ambiguities is impossible, but we
+have prevented some of the worst ones above.
+
+Some proquint sequences ending in "h" take some extra effort to
+pronounce and hear, but since there is always exactly one consonant
+where you expect one, there is less ambiguity than in natural spoken
+English: if you don't hear a consonant when you expected one, it was
+an "h", the empty consonant.  The only other option is to replace "h"
+with "x" and we really can't say that doing so is an improvement: "x"
+is usually pronounced as "ks" which is really a consonant cluster and
+confuses the rhythm.
+
+There is another subtle reason not to use "x": the standard notation
+for a hex string starts with a prefix that includes an "x" so it is
+therefore possible to unambiguously distinguish between a proquint and
+a hex string in standard notation.
+
+A sequence of proquints should be separated by something standard,
+such as dashes.  While the dash is intended to induce a pause, for
+easy flow of pronunciation we suggest an unused vowel sound be used.
+Since we don't use the vowel "e", we suggest the dash be pronounced as
+"eh".
+
+See the "Conclusion and Specification" section below for the full
+specification of the resulting proquint coding scheme.
+
+== Information Density
+
+While information density is not the only goal, it is a concern for
+any coding system.  Note that we get 16 bits out of 5 letters, which
+gives us an proquint information density of:
+
+........
+    (/ 16.0 5.0)
+    3.2
+........
+
+This is close to the density of 4 for hexadecimal and almost the same
+as the density 3.32 for decimal digits.
+
+However, note that unbroken strings of hex or decimal digits are quite
+unreadable, and they are usually broken into groups of at most four,
+whereas proquints are readable in groups of five.  Taking this into
+account gives hex a density of 3.2, decimal 2.65, and proquint 2.86.
+
+=== Density as Compared To Credit Card Numbers
+
+In particular, why aren't credit card numbers proquints instead of
+numbers?
+
+The density of four blocks of four decimal digits, including separators is
+........
+    (/ (log2 (* 10000.0 10000.0 10000.0 10000.0 ))
+       (+ (* 4 4) (* 3 1)))
+    2.7974131325367266
+........
+
+The density of three blocks proquints, including separators is
+........
+    (* 16.0 6.0 16.0 6.0 16.0)
+    147456.0
+    (/ (log2 (* 147456.0 147456.0 147456.0))
+       (+ (* 3 5) (* 2 1)))
+    3.0299867649604084
+........
+
+=== Density as Compared To English
+
+Bruce Schneier says in "Applied Cryptography" *[Schneier-1996,
+pp. 233-234]* that Shannon computed an entropy of 2.3 bits per letter
+for 8-letter chunks; other computations getting lower numbers,
+Schneier settling on 1.3 for general purposes.  So we are above the
+information rate expected for English, but not dramatically so.  We
+suspect the fact that proquints are more information-dense than
+English is the reason proquints must be pronounced a bit more
+carefully than English -- there's no such thing as a free lunch.
+
+== Proquints As A Mnemonic Password Scheme
+
+It is a well-known problem that people often create weak passwords, at
+least partly due to their desire to create mnemonic passwords.
+Mnemonic schemes have been suggested but the information density /
+password strength versus that of standard password schemes can be a
+challenge to state precisely, as the useful entropy of a password
+amounts only the entropy relative to the implied expectations encoded
+in an attackers dictionary.  Various empirical studies have been made
+*[YBA-2000, KRC-2006]*.  At least one method of generating random
+pronounceable passwords have been shown to be insecure *[GD-1994]*.
+Narayanan and Shmatikov *[NS-2005]* claim that "as long as passwords
+remain human-memorable, they are vulnerable to "smart-dictionary"
+attacks even when the space of potential passwords is large."
+
+Of course a simple scheme using proquints can generate passwords of
+known strength that are still quite readable, spellable, and
+pronounceable:
+
+ 1. generate random 32 (or 48 or 64 bits),
+
+ 2. convert them to two (or three or four) proquints, and
+
+ 3. tell the user that's their password.
+
+The extent to which a user would find a password so generated to be
+mnemonic is still an open question.  Narayanan points out to me
+*[N-2009-p]* that if users are allowed to regenerate passwords until
+they find one that is particularly mnemonic then the strength of the
+above password scheme may not be quite as imagined.
+
+We imagine one possible security threat is that proquints are rather
+fun to pronounce, and we find ourselves doing so especially when we
+are attempting to memorize or recall one.  Therefore perhaps users of
+proquint-encoded passwords should be admonished to refrain from this
+temptation.
+
+== An Easy Path to Adoption
+
+Any protocol that currently uses an opaque identifier somewhere can
+immediately begin to use proquints by simply printing any such
+identifiers in proquint form as well and accepting proquints as
+alternatives to such identifiers.
+
+ * Debuggers could input and output memory addresses as proquints as
+   an alternative to hex.
+
+ * Network tools such as browsers, ping, netstat, traceroute,
+   etc. could input and output proquints as an alternative to dotted
+   quads.
+
+ * Password generators could generate the proquint form, as above.
+
+ * Hash functions such as sha1 could use proquints as as alternative
+   notation for the hashvalue.  Tools that use hash values of objects
+   as their identifiers, such as version control systems like
+   monotone, mercurial, and git, could do the same.
+
+ * Tools that use public-key encryption could encode the
+   public/private key-pairs as proquints.  It might actually be
+   possible to memorize your public key if you chanted it enough
+   times.
+
+== Conclusion and Specification
+
+In sum, we propose encoding a 16-bit string as a proquint of
+alternating consonants and vowels as follows.
+
+Four-bits as a consonant:
+........
+    0 1 2 3 4 5 6 7 8 9 A B C D E F
+    b d f g h j k l m n p r s t v z
+........
+
+Two-bits as a vowel:
+........
+    0 1 2 3
+    a i o u
+........
+
+Whole 16-bit word, where "con" = consonant, "vo" = vowel:
+........
+     0 1 2 3 4 5 6 7 8 9 A B C D E F
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |con    |vo |con    |vo |con    |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+........
+
+Separate proquints using dashes, which can go un-pronounced or be
+pronounced "eh".  The suggested optional magic number prefix to a
+sequence of proquints is "0q-".
+
+Here are some IP dotted-quads and their corresponding proquints.
+
+....
+    127.0.0.1       lusab-babad 
+    63.84.220.193   gutih-tugad 
+    63.118.7.35     gutuk-bisog 
+    140.98.193.141  mudof-sakat 
+    64.255.6.200    haguz-biram 
+    128.30.52.45    mabiv-gibot 
+    147.67.119.2    natag-lisaf 
+    212.58.253.68   tibup-zujah 
+    216.35.68.215   tobog-higil 
+    216.68.232.21   todah-vobij 
+    198.81.129.136  sinid-makam 
+    12.110.110.204  budov-kuras 
+....
+
+An Open Source implementation of a converter between strings encoded
+as dotted quads, hex, decimal, and proquints is available
+*[proquint-github]*.
+
+== Acknowledgements
+
+We gratefully acknowledge Simon Goldsmith, Karl Chen, Erick Armbrust,
+and Arvind Narayanan for their proofreading and/or discussion of this
+article.  Any remaining errors are mine alone.
+
+== References
+
+=== Open Source implementation
+
+*[proquint-github]* http://github.com/dsw/proquint[]
+
+ * An implementation in C of a converter between proquint, hex, and
+   decimal strings.
+
+ * An implementation in Perl5 of a converter between dotted quads and
+   hex.
+
+=== Print
+
+*[GD-1994]* Ravi Ganesan and Chris Davies.  "A New Attack on Random
+Pronounceable Password Generators".  _Proceedings of the 17th
+NIST-NCSC National Computer Security Conference_.  1994.  pp. 184-197.
+
+*[KRC-2006]* Cynthia Kuo, Sasha Romanosky, and Lorrie Faith Cranor.
+"Human Selection of Mnemonic Phrase-based Passwords", _Symposium on
+Usable Privacy and Security (SOUPS) 2006_, July 12 - 14, 2006.
+
+*[NS-2005]* Arvind Narayanan and Vitaly Shmatikov.  "Fast Dictionary
+Attacks on Passwords Using Time-Space Tradeoff".  _Proceedings of 12th
+ACM Conference on Computer and Communications Security (CCS)_.
+November 2005.  pp. 364-372.
+
+*[Schneier-1996]* Bruce Schneier.  _Applied Cryptography_.  John Wiley
+& Sons.  1996.
+
+*[Shannon-1948]* C.E. Shannon, "A Mathematical Theory of
+Communication", _Bell System Technical Journal_, v. 27, n. 4, 1948,
+pp. 379-423, 623-656.
+
+*[Shannon-1949]* C.E. Shannon, "Communication Theory of Secrecy
+Systems", _Bell System Technical Journal_, v. 28, n. 4, 1949,
+pp. 656-715.
+
+*[Shannon-1951]* C.E. Shannon, "Predication and Entropy in Printed
+English", _Bell System Technical Journal_, v.30, n.1, 1951, pp. 50-64.
+
+*[Shannon-1993]* C.E. Shannon, _Collected Papers: Claude Elwood
+Shannon_, N.J.A. Sloane and A.D. Wyner, eds., New York: IEEE Press,
+1993.
+
+*[YBA-2000]* Jeff Yan, Alan Blackwell, Ross Anderson, and Alasdair
+Grant.  "The Memorability and Security of Passwords -- Some Empirical
+Results".  Technical Report No. 500, Computer Laboratory, University
+of Cambridge, 2000.
+
+=== Web
+
+*[pronounce]* Pronounceable sounds in English:
+http://www.antimoon.com/how/pronunc-soundsipa.htm[]
+
+*[pronounce2]* Wikipedia article on pronounceable sounds in English:
+http://en.wikipedia.org/wiki/English_pronunciation[]
+
+=== Personal Communication
+
+*[N-2009-p]* Personal communication, Arvind Narayanan.
+
+== Copyright
+
+Copyright 2009 Daniel S. Wilkerson
