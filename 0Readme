@@ -8,6 +8,11 @@
 
 Welcome!
 
+Please see the article on proquints: http://arXiv.org/html/0901.4016
+
+A local copy is in proquint-proposal.txt and this can be converted to
+proquint-proposal.gen.html by typing "make".
+
 The C program proquint.c converts between proquint, hex, and decimal
 strings.  It compiles to the executable proquint; just type "make".
 
