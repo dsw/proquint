@@ -94,7 +94,16 @@ static void main_convertNumber(int base, char const *s) {
 static void main_convertQuint(char const *s) {
   LOC;
 
-  uint32_t const uint0 = quint2uint(s);
+  uint32_t uint0;
+  enum quint_parse_res_t res = quint2uint(s, &uint0);
+  if (res != OK_QPR) {
+    if (res == BAD_CHAR_QPR) {
+      fprintf(stderr, "Illegal character in quint-word '%s'\n", s);
+      exit(1);
+    }
+    fprintf(stderr, "Unknown quint parse result.\n");
+    exit(1);
+  }
 
   /* fprintf(stderr, "quint %s -> uint %u = x%x\n", s, uint0, uint0); */
   printf("x%x ", uint0);

@@ -1,33 +1,12 @@
 /*
 This file is part of proquint.  See License.txt for copyright and
 terms of use.
-
-Convert between proquint, hex, and decimal strings.
-Daniel S. Wilkerson
-
-Four-bits as a consonant:
-    0 1 2 3 4 5 6 7 8 9 A B C D E F
-    b d f g h j k l m n p r s t v z
-
-Two-bits as a vowel:
-    0 1 2 3
-    a i o u
-
-Whole 16-bit word, where "con" = consonant, "vo" = vowel.
-     0 1 2 3 4 5 6 7 8 9 A B C D E F
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |con0   |vo1|con2   |vo3|con4   |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |-Hex0--|-Hex1--|-Hex2--|-Hex3--|
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 */
 
 #include "proquint.h"
 
-#include <stdio.h>              /* printf, fprintf */
-#include <stdlib.h>             /* exit */
-
 #ifdef DEBUG
+#  include <stdio.h>              /* printf, fprintf */
 #  define LOC \
    printf("%s:%d:%s\n", __FILE__, __LINE__, __FUNCTION__); fflush(stdout)
 #else
@@ -58,60 +37,58 @@ static char const uint2vowel[] = {
 
 /* Map a quint to a uint.
  */
-uint32_t quint2uint(char const *quint) {
+enum quint_parse_res_t quint2uint(char const *quint, uint32_t *i /*output*/) {
   LOC;
-  char const *const quint_orig = quint; /* for error messages */
-  uint32_t ret = 0;
+  uint32_t res = 0;
   char c;
 
   for(; (c=*quint); ++quint) {
     switch(c) {
 
     /* consonants */
-    case 'b': ret <<= 4; ret +=  0; break;
-    case 'd': ret <<= 4; ret +=  1; break;
-    case 'f': ret <<= 4; ret +=  2; break;
-    case 'g': ret <<= 4; ret +=  3; break;
+    case 'b': res <<= 4; res +=  0; break;
+    case 'd': res <<= 4; res +=  1; break;
+    case 'f': res <<= 4; res +=  2; break;
+    case 'g': res <<= 4; res +=  3; break;
 
-    case 'h': ret <<= 4; ret +=  4; break;
-    case 'j': ret <<= 4; ret +=  5; break;
-    case 'k': ret <<= 4; ret +=  6; break;
-    case 'l': ret <<= 4; ret +=  7; break;
+    case 'h': res <<= 4; res +=  4; break;
+    case 'j': res <<= 4; res +=  5; break;
+    case 'k': res <<= 4; res +=  6; break;
+    case 'l': res <<= 4; res +=  7; break;
 
-    case 'm': ret <<= 4; ret +=  8; break;
-    case 'n': ret <<= 4; ret +=  9; break;
-    case 'p': ret <<= 4; ret += 10; break;
-    case 'r': ret <<= 4; ret += 11; break;
+    case 'm': res <<= 4; res +=  8; break;
+    case 'n': res <<= 4; res +=  9; break;
+    case 'p': res <<= 4; res += 10; break;
+    case 'r': res <<= 4; res += 11; break;
 
-    case 's': ret <<= 4; ret += 12; break;
-    case 't': ret <<= 4; ret += 13; break;
-    case 'v': ret <<= 4; ret += 14; break;
-    case 'z': ret <<= 4; ret += 15; break;
+    case 's': res <<= 4; res += 12; break;
+    case 't': res <<= 4; res += 13; break;
+    case 'v': res <<= 4; res += 14; break;
+    case 'z': res <<= 4; res += 15; break;
 
     /* vowels */
-    case 'a': ret <<= 2; ret +=  0; break;
-    case 'i': ret <<= 2; ret +=  1; break;
-    case 'o': ret <<= 2; ret +=  2; break;
-    case 'u': ret <<= 2; ret +=  3; break;
+    case 'a': res <<= 2; res +=  0; break;
+    case 'i': res <<= 2; res +=  1; break;
+    case 'o': res <<= 2; res +=  2; break;
+    case 'u': res <<= 2; res +=  3; break;
 
     /* separators */
     case '-': break;
 
     /* illegal characters */
     default:
-      fprintf(stderr, "Illegal character in quint-word '%s': '%c'.\n",
-              quint_orig, c);
-      exit(1);
+      return BAD_CHAR_QPR;
       break;
     }
   }
 
-  return ret;
+  *i = res;
+  return OK_QPR;
 }
 
 /* Map a uint to a quint.
  */
-void uint2quint(char *quint /* output */, uint32_t i) {
+void uint2quint(char *quint /*output*/, uint32_t i) {
   LOC;
   /* Note K&R section 2.9: "Right shifting an unsigned quantity always
      fills vacated it with zero."
