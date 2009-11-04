@@ -31,14 +31,17 @@ all: proquint
 
 .PHONY: clean-code
 clean-code: clean-out
-	rm -f proquint
+	rm -f *.o proquint
 
 .PHONY: clean-out
 clean-out:
 	rm -f check_out.txt
 
-proquint: proquint.c
-	gcc -ansi -Wall -o $@ $<
+proquint.o proquint_main.o: %.o: %.c
+	gcc -ansi -Wall -c -o $@ $<
+
+proquint: proquint.o proquint_main.o
+	gcc -ansi -Wall -o $@ $^
 
 .PHONY: check-dquad-hex
 check-dquad-hex:

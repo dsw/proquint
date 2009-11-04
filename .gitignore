@@ -1,3 +1,4 @@
 *.gen.html
+*.o
 proquint
 *_out.txt
