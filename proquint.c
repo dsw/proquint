@@ -27,6 +27,20 @@ Whole 16-bit word, where "con" = consonant, "vo" = vowel.
 #include <stdio.h>              /* printf, fprintf */
 #include <stdlib.h>             /* exit */
 
+#ifdef DEBUG
+#  define LOC \
+   printf("%s:%d:%s\n", __FILE__, __LINE__, __FUNCTION__); fflush(stdout)
+#else
+#  define LOC
+#endif
+
+/* Mask off the first four bits.
+ */
+#define MASK_FIRST4 0xF0000000
+/* Mask off the first two bits.
+ */
+#define MASK_FIRST2 0xC0000000
+
 /* Map uints to consonants.
  */
 static char const uint2consonant[] = {

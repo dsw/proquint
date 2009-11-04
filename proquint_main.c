@@ -12,6 +12,13 @@ Daniel S. Wilkerson
 #include <stdlib.h>             /* exit */
 #include <ctype.h>              /* isdigit */
 
+#ifdef DEBUG
+#  define LOC \
+   printf("%s:%d:%s\n", __FILE__, __LINE__, __FUNCTION__); fflush(stdout)
+#else
+#  define LOC
+#endif
+
 /* My atoi; it's easier to write it than to figure out how to get the
    libraries to parse a string into an unsigned int.
 */
