@@ -6,6 +6,7 @@
 
 /*
 Convert between proquint, hex, and decimal strings.
+Please see the article on proquints: http://arXiv.org/html/0901.4016
 Daniel S. Wilkerson
 
 Four-bits as a consonant:
