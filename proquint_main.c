@@ -12,24 +12,15 @@ Daniel S. Wilkerson
 #include <stdlib.h>             /* exit */
 #include <ctype.h>              /* isdigit */
 
-#ifdef DEBUG
-#  define LOC \
-   printf("%s:%d:%s\n", __FILE__, __LINE__, __FUNCTION__); fflush(stdout)
-#else
-#  define LOC
-#endif
-
 /* My atoi; it's easier to write it than to figure out how to get the
    libraries to parse a string into an unsigned int.
 */
 static uint32_t my_atoi(int base, char const *s) {
-  LOC;
   char const *const s_orig = s; /* for error messages */
   uint32_t ret = 0;
   int c;
 
   for(; (c=*s); ++s) {
-    LOC;
     int value = -1;
 
     switch(c) {
@@ -80,8 +71,6 @@ static uint32_t my_atoi(int base, char const *s) {
 }
 
 static void main_convertNumber(int base, char const *s) {
-  LOC;
-
   /* Length of a 32-bit quint word, without trailing NUL:
      two quints plus a separator. */
   int const QUINT_LEN = 5*2 + 1;
@@ -97,7 +86,6 @@ static void main_convertNumber(int base, char const *s) {
 }
 
 static void main_convertQuint(char const *s) {
-  LOC;
   uint32_t uint0 = quint2uint(s);
   /* fprintf(stderr, "quint %s -> uint %u = x%x\n", s, uint0, uint0); */
   printf("x%x ", uint0);
@@ -106,8 +94,6 @@ static void main_convertQuint(char const *s) {
 /* Convert command-line strings.
  */
 int main(int argc, char const **argv) {
-  LOC;
-
   --argc; ++argv;
   for(; *argv; --argc, ++argv) {
     char const *s = *argv;

@@ -5,14 +5,6 @@ terms of use.
 
 #include "proquint.h"
 
-#ifdef DEBUG
-#  include <stdio.h>              /* printf, fprintf */
-#  define LOC \
-   printf("%s:%d:%s\n", __FILE__, __LINE__, __FUNCTION__); fflush(stdout)
-#else
-#  define LOC
-#endif
-
 /* Mask off the first four bits.
  */
 #define MASK_FIRST4 0xF0000000
@@ -38,7 +30,6 @@ static char const uint2vowel[] = {
 /* Map a quint to a uint, skipping non-coding characters.
  */
 uint32_t quint2uint(char const *quint) {
-  LOC;
   uint32_t res = 0;
   char c;
 
@@ -83,7 +74,6 @@ uint32_t quint2uint(char const *quint) {
 /* Map a uint to two quints using optional sepCar to separate them.
  */
 void uint2quint(char *quint /*output*/, uint32_t i, int sepChar) {
-  LOC;
   /* Note K&R section 2.9: "Right shifting an unsigned quantity always
      fills vacated it with zero."
   */
