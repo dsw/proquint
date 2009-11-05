@@ -28,10 +28,10 @@ Whole 16-bit word, where "con" = consonant, "vo" = vowel.
 /* Assume that unsigned int is 32-bits; change this otherwise. */
 typedef unsigned int uint32_t;
 
-/* Map a quint to a uint, skipping non-coding characters. */
-uint32_t quint2uint(char const *quint);
-
 /* Map a uint to two quints using optional sepCar to separate them. */
 void uint2quint(char *quint /*output*/, uint32_t i, int sepChar);
+
+/* Map a quint to a uint, skipping non-coding characters. */
+uint32_t quint2uint(char const *quint);
 
 #endif /* PROQUINT_H */
