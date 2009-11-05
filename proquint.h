@@ -1,5 +1,5 @@
-/* This file is part of proquint.  See License.txt for copyright and
-   terms of use. */
+/* This file is part of proquint: http://github.com/dsw/proquint .
+   See License.txt for copyright and terms of use. */
 
 #ifndef PROQUINT_H
 #define PROQUINT_H
