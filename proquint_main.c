@@ -85,7 +85,7 @@ static void main_convertNumber(int base, char const *s) {
   int i;
 
   for(i=0; i<QUINT_LEN+1; ++i) quint[i] = '\0';
-  uint2quint(quint, my_atoi(base, s));
+  uint2quint(quint, my_atoi(base, s), '-');
 
   /* fprintf(stderr, "uint %s -> quint %s\n", s, quint); */
   printf("%s ", quint);

@@ -40,8 +40,8 @@ enum quint_parse_res_t {
  */
 enum quint_parse_res_t quint2uint(char const *quint, uint32_t *i /*output*/);
 
-/* Map a uint to a quint.
+/* Map a uint to two quints using optional sepCar to separate them.
  */
-void uint2quint(char *quint /*output*/, uint32_t i);
+void uint2quint(char *quint /*output*/, uint32_t i, int sepChar);
 
 #endif /* PROQUINT_H */

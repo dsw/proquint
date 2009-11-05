@@ -86,9 +86,9 @@ enum quint_parse_res_t quint2uint(char const *quint, uint32_t *i /*output*/) {
   return OK_QPR;
 }
 
-/* Map a uint to a quint.
+/* Map a uint to two quints using optional sepCar to separate them.
  */
-void uint2quint(char *quint /*output*/, uint32_t i) {
+void uint2quint(char *quint /*output*/, uint32_t i, int sepChar) {
   LOC;
   /* Note K&R section 2.9: "Right shifting an unsigned quantity always
      fills vacated it with zero."
@@ -113,7 +113,9 @@ void uint2quint(char *quint /*output*/, uint32_t i) {
   HANDLE_VOWEL;
   HANDLE_CONSONANT;
 
-  APPEND('-');
+  if (sepChar) {
+    APPEND(((char) sepChar));
+  }
 
   HANDLE_CONSONANT;
   HANDLE_VOWEL;
