@@ -26,19 +26,9 @@ Whole 16-bit word, where "con" = consonant, "vo" = vowel.
  */
 typedef unsigned int uint32_t;
 
-/* Length of a 32-bit quint word, without trailing NUL
+/* Map a quint to a uint, skipping non-coding characters.
  */
-#define QUINT_LEN (5*4 + 1*3)
-
-/* Results of parsing a quint. */
-enum quint_parse_res_t {
-  OK_QPR = 0,
-  BAD_CHAR_QPR = 1,
-};
-
-/* Map a quint to a uint.
- */
-enum quint_parse_res_t quint2uint(char const *quint, uint32_t *i /*output*/);
+uint32_t quint2uint(char const *quint);
 
 /* Map a uint to two quints using optional sepCar to separate them.
  */

@@ -81,11 +81,16 @@ static uint32_t my_atoi(int base, char const *s) {
 
 static void main_convertNumber(int base, char const *s) {
   LOC;
+
+  /* Length of a 32-bit quint word, without trailing NUL:
+     two quints plus a separator. */
+  int const QUINT_LEN = 5*2 + 1;
+  int const n = my_atoi(base, s);
   char quint[QUINT_LEN+1];
   int i;
 
   for(i=0; i<QUINT_LEN+1; ++i) quint[i] = '\0';
-  uint2quint(quint, my_atoi(base, s), '-');
+  uint2quint(quint, n, '-');
 
   /* fprintf(stderr, "uint %s -> quint %s\n", s, quint); */
   printf("%s ", quint);
@@ -93,18 +98,7 @@ static void main_convertNumber(int base, char const *s) {
 
 static void main_convertQuint(char const *s) {
   LOC;
-
-  uint32_t uint0;
-  enum quint_parse_res_t res = quint2uint(s, &uint0);
-  if (res != OK_QPR) {
-    if (res == BAD_CHAR_QPR) {
-      fprintf(stderr, "Illegal character in quint-word '%s'\n", s);
-      exit(1);
-    }
-    fprintf(stderr, "Unknown quint parse result.\n");
-    exit(1);
-  }
-
+  uint32_t uint0 = quint2uint(s);
   /* fprintf(stderr, "quint %s -> uint %u = x%x\n", s, uint0, uint0); */
   printf("x%x ", uint0);
 }

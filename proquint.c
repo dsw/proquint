@@ -35,9 +35,9 @@ static char const uint2vowel[] = {
   'a', 'i', 'o', 'u'
 };
 
-/* Map a quint to a uint.
+/* Map a quint to a uint, skipping non-coding characters.
  */
-enum quint_parse_res_t quint2uint(char const *quint, uint32_t *i /*output*/) {
+uint32_t quint2uint(char const *quint) {
   LOC;
   uint32_t res = 0;
   char c;
@@ -73,17 +73,11 @@ enum quint_parse_res_t quint2uint(char const *quint, uint32_t *i /*output*/) {
     case 'u': res <<= 2; res +=  3; break;
 
     /* separators */
-    case '-': break;
-
-    /* illegal characters */
-    default:
-      return BAD_CHAR_QPR;
-      break;
+    default: break;
     }
   }
 
-  *i = res;
-  return OK_QPR;
+  return res;
 }
 
 /* Map a uint to two quints using optional sepCar to separate them.
@@ -123,7 +117,7 @@ void uint2quint(char *quint /*output*/, uint32_t i, int sepChar) {
   HANDLE_VOWEL;
   HANDLE_CONSONANT;
 
-# undef APPEND
-# undef HANDLE_CONSONANT
 # undef HANDLE_VOWEL
+# undef HANDLE_CONSONANT
+# undef APPEND
 }
