@@ -1,19 +1,14 @@
+/* This file is part of proquint.  See License.txt for copyright and
+   terms of use. */
+
 /*
-This file is part of proquint.  See License.txt for copyright and
-terms of use.
+Convert between proquint, hex, and decimal strings.
+Daniel S. Wilkerson
 */
 
 #include "proquint.h"
 
-/* Mask off the first four bits.
- */
-#define MASK_FIRST4 0xF0000000
-/* Mask off the first two bits.
- */
-#define MASK_FIRST2 0xC0000000
-
-/* Map uints to consonants.
- */
+/* Map uints to consonants. */
 static char const uint2consonant[] = {
   'b', 'd', 'f', 'g',
   'h', 'j', 'k', 'l',
@@ -21,14 +16,54 @@ static char const uint2consonant[] = {
   's', 't', 'v', 'z'
 };
 
-/* Map uints to vowels.
- */
+/* Map uints to vowels. */
 static char const uint2vowel[] = {
   'a', 'i', 'o', 'u'
 };
 
-/* Map a quint to a uint, skipping non-coding characters.
- */
+void uint2quint(char *quint /*output*/, uint32_t i, int sepChar) {
+  /* K&R section 2.9: "Right shifting an unsigned quantity always
+     fills vacated it with zero." */
+  uint32_t j;
+
+# define APPEND(X) *quint = (X); ++quint
+
+# define MASK_FIRST4 0xF0000000
+# define MASK_FIRST2 0xC0000000
+
+# define HANDLE_CONSONANT  \
+  j = i & MASK_FIRST4;     \
+  i <<= 4; j >>= 28;       \
+  APPEND(uint2consonant[j])
+
+# define HANDLE_VOWEL      \
+  j = i & MASK_FIRST2;     \
+  i <<= 2; j >>= 30;       \
+  APPEND(uint2vowel[j])
+
+  HANDLE_CONSONANT;
+  HANDLE_VOWEL;
+  HANDLE_CONSONANT;
+  HANDLE_VOWEL;
+  HANDLE_CONSONANT;
+
+  if (sepChar) {
+    APPEND(((char) sepChar));
+  }
+
+  HANDLE_CONSONANT;
+  HANDLE_VOWEL;
+  HANDLE_CONSONANT;
+  HANDLE_VOWEL;
+  HANDLE_CONSONANT;
+
+# undef HANDLE_VOWEL
+# undef HANDLE_CONSONANT
+# undef APPEND
+# undef MASK_FIRST2
+# undef MASK_FIRST4
+}
+
 uint32_t quint2uint(char const *quint) {
   uint32_t res = 0;
   char c;
@@ -69,45 +104,4 @@ uint32_t quint2uint(char const *quint) {
   }
 
   return res;
-}
-
-/* Map a uint to two quints using optional sepCar to separate them.
- */
-void uint2quint(char *quint /*output*/, uint32_t i, int sepChar) {
-  /* Note K&R section 2.9: "Right shifting an unsigned quantity always
-     fills vacated it with zero."
-  */
-  uint32_t j;
-
-# define APPEND(X) *quint = (X); ++quint
-
-# define HANDLE_CONSONANT  \
-  j = i & MASK_FIRST4;     \
-  i <<= 4; j >>= 28;       \
-  APPEND(uint2consonant[j])
-
-# define HANDLE_VOWEL      \
-  j = i & MASK_FIRST2;     \
-  i <<= 2; j >>= 30;       \
-  APPEND(uint2vowel[j])
-
-  HANDLE_CONSONANT;
-  HANDLE_VOWEL;
-  HANDLE_CONSONANT;
-  HANDLE_VOWEL;
-  HANDLE_CONSONANT;
-
-  if (sepChar) {
-    APPEND(((char) sepChar));
-  }
-
-  HANDLE_CONSONANT;
-  HANDLE_VOWEL;
-  HANDLE_CONSONANT;
-  HANDLE_VOWEL;
-  HANDLE_CONSONANT;
-
-# undef HANDLE_VOWEL
-# undef HANDLE_CONSONANT
-# undef APPEND
 }

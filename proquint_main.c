@@ -1,7 +1,7 @@
-/*
-This file is part of proquint.  See License.txt for copyright and
-terms of use.
+/* This file is part of proquint.  See License.txt for copyright and
+   terms of use. */
 
+/*
 Main driver for library proquint.c.
 Daniel S. Wilkerson
 */
@@ -74,11 +74,15 @@ static void main_convertNumber(int base, char const *s) {
   /* Length of a 32-bit quint word, without trailing NUL:
      two quints plus a separator. */
   int const QUINT_LEN = 5*2 + 1;
+  /* Double length plus another separator in case we switch to
+     64-bits. */
+  int const DOUBLE_QUINT_LEN = 2*QUINT_LEN + 1;
+
   int const n = my_atoi(base, s);
-  char quint[QUINT_LEN+1];
+  char quint[DOUBLE_QUINT_LEN+1];
   int i;
 
-  for(i=0; i<QUINT_LEN+1; ++i) quint[i] = '\0';
+  for(i=0; i<DOUBLE_QUINT_LEN+1; ++i) quint[i] = '\0';
   uint2quint(quint, n, '-');
 
   /* fprintf(stderr, "uint %s -> quint %s\n", s, quint); */

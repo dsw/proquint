@@ -1,3 +1,6 @@
+/* This file is part of proquint.  See License.txt for copyright and
+   terms of use. */
+
 #ifndef PROQUINT_H
 #define PROQUINT_H
 
@@ -22,16 +25,13 @@ Whole 16-bit word, where "con" = consonant, "vo" = vowel.
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 */
 
-/* Assume that unsigned int is a 32-bit int; change this if it is not.
- */
+/* Assume that unsigned int is 32-bits; change this otherwise. */
 typedef unsigned int uint32_t;
 
-/* Map a quint to a uint, skipping non-coding characters.
- */
+/* Map a quint to a uint, skipping non-coding characters. */
 uint32_t quint2uint(char const *quint);
 
-/* Map a uint to two quints using optional sepCar to separate them.
- */
+/* Map a uint to two quints using optional sepCar to separate them. */
 void uint2quint(char *quint /*output*/, uint32_t i, int sepChar);
 
 #endif /* PROQUINT_H */
