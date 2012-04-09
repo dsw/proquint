@@ -27,11 +27,11 @@ $(DOCS_HTML): %.gen.html: %.txt
 
 # **** code
 
-all: proquint
+all: proquint Proquint.class ProquintMain.class
 
 .PHONY: clean-code
 clean-code: clean-out
-	rm -f *.o proquint
+	rm -f *.o proquint *.class
 
 .PHONY: clean-out
 clean-out:
@@ -42,6 +42,9 @@ proquint.o proquint_main.o: %.o: %.c
 
 proquint: proquint.o proquint_main.o
 	gcc -ansi -Wall -o $@ $^
+
+%.class: %.java
+	javac $<
 
 .PHONY: check-dquad-hex
 check-dquad-hex:
@@ -54,8 +57,13 @@ check-proquint:
 	./dquad-hex 127.0.0.1 63.84.220.193 | xargs ./proquint >> check_out.txt
 	./proquint lusab-babad gutih-tugad | xargs ./dquad-hex >> check_out.txt
 
+.PHONY: check-proquint-java
+check-proquint-java:
+	./dquad-hex 127.0.0.1 63.84.220.193 | xargs java ProquintMain >> check_out.txt
+	java ProquintMain lusab-babad gutih-tugad | xargs ./dquad-hex >> check_out.txt
+
 .PHONY: check
-check: clean-out check-dquad-hex check-proquint
+check: clean-out check-dquad-hex check-proquint check-proquint-java
 	diff check_out.txt check_cor.txt
 
 COMPUTER_ORG_IP := 63.84.220.193

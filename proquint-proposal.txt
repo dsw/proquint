@@ -340,11 +340,8 @@ article.  Any remaining errors are mine alone.
 
 *[proquint-github]* http://github.com/dsw/proquint[]
 
- * An implementation in C of a converter between proquint, hex, and
-   decimal strings.
-
- * An implementation in Perl5 of a converter between dotted quads and
-   hex.
+We provide implementations in C and in Java of a converter between
+proquint, hex, and decimal strings.
 
 === Print
 

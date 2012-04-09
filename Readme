@@ -4,20 +4,21 @@
                      Spellable, and Pronounceable
 
                          Daniel S. Wilkerson
-                            9 January 2009
+
+9 January 2009: initial release
+8 April 2012: Java implementation
 
 Welcome!
 
-Please see the article on proquints: http://arXiv.org/html/0901.4016
-
+Please see the article on proquints: http://arXiv.org/html/0901.4016;
 A local copy is in proquint-proposal.txt and this can be converted to
 proquint-proposal.gen.html by typing "make".
 
-The C program proquint.c converts between proquint, hex, and decimal
-strings.  It compiles to the executable proquint; just type "make".
+C implementation: proquint.c converts between proquint, hex, and
+decimal strings.
 
-The Perl program dquad-hex converts between dotted-quads and hex
-strings.  It is used in testing proquint.
+Java implementation: Proquint.java converts between proquint, hex, and
+decimal strings.
 
 Run "make clean all check" to build and check everything.  After that
 you can run "make demo" for a simple demo and "make examples" for more
