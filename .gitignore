@@ -1,5 +1,5 @@
 *.gen.html
 *.o
 *.class
-proquint
+./proquint
 *_out.txt
