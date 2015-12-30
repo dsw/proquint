@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<title>Proquint JS implementatino</title>
+<meta charset="utf-8"><html>
+<style>
+.hidden {
+	display:none;
+}
+</style>
+</head>
+<body>
+<h1><span id="toggle-theory" title="Click to see theory">[+]</span>Theory excerpt:</h1>
+<div class="hidden" id="theory">
+<p><a href="http://arxiv.org/html/0901.4016">Read full theory behing proquint</a></p>
+<p>
+In sum, we propose encoding a 16-bit string as a proquint of alternating consonants and vowels as follows.
+</p>
+
+<p>Four-bits as a consonant:</p>
+
+<pre>
+    0 1 2 3 4 5 6 7 8 9 A B C D E F
+    b d f g h j k l m n p r s t v z
+</pre>
+
+<p>Two-bits as a vowel:</p>
+
+<pre>
+    0 1 2 3
+    a i o u
+</pre>
+
+<p>Whole 16-bit word, where "con" = consonant, "vo" = vowel:</p>
+
+<pre>
+     0 1 2 3 4 5 6 7 8 9 A B C D E F
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |con    |vo |con    |vo |con    |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+  
+</pre>
+<p>
+Separate proquints using dashes, which can go un-pronounced or be pronounced "eh". The suggested optional magic number prefix to a sequence of proquints is "0q-".
+</p>
+</div>
+
+
+<textarea id="txtInput" cols="60" rows="10">bonam-hohah</textarea>
+
+<button type="button" id="btnConvert">--Convert--&gt;</button>
+<button type="button" id="btnSwap">&lt;--Swap--&gt;</button>
+
+<textarea id="txtOutput"  cols="60" rows="10"></textarea>
+
+</body>
+<script src="proquint.js"></script>
+</html>
