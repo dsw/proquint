@@ -20,6 +20,10 @@ decimal strings.
 Java implementation: Proquint.java converts between proquint, hex, and
 decimal strings.
 
+Elixir implemenation: Converts binaries to proquint encoded strings, 
+Decodes proquint encode strings to binaries. Implementation can be found
+at https://hexdocs.pm/proquint/Proquint.html
+
 Run "make clean all check" to build and check everything.  After that
 you can run "make demo" for a simple demo and "make examples" for more
 examples.
