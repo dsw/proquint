@@ -1,0 +1,10 @@
+dist/
+MANIFEST
+.idea/
+.eggs/
+.hypothesis/
+.tox/
+*.egg-info
+*/__pycache__
+*.pyc
+!/proquint/
