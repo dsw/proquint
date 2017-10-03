@@ -27,14 +27,14 @@ def _uint16_to_quint(uint16_val):
 
 
 def uint2quint(uint_val, separator='-'):
-    """Convert 32-bit integer value to character quintet representation.
+    """Convert 32-bit integer value into corresponding proquint string identifier.
 
     >>> uint2quint(0x7F000001, '-')
     lusab-babad
 
-    :param uint_val: value to encode
-    :param separator: string to separate quintets
-    :return: encoded string value
+    :param uint_val: 32-bit integer value to encode
+    :param separator: string to separate character quintets
+    :return: proquint string identifier
     """
     if uint_val < 0 or uint_val > 0xFFFFFFFF:
         raise ValueError('uint_val should be in range 0-0xFFFFFFFF')
@@ -44,13 +44,13 @@ def uint2quint(uint_val, separator='-'):
 
 
 def quint2uint(quint):
-    """Convert "proquint" string into the corresponding uint representation.
+    """Convert proquint string identifier into corresponding 32-bit integer value.
 
     >>> hex(quint2uint('lusab-babad'))
     '0x7F000001'
 
-    :param quint: "proquint" value to decode
-    :return: uint32 representation of the proquint encoded value
+    :param quint: proquint string identifier to decode
+    :return: 32-bit integer representation of the proquint encoded value
     """
     res = 0
     for c in quint:
