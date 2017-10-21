@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-__version__ = '0.1.0'
+__version__ = '0.2.0'
 
 tests_require = [
     'nose >= 1.3',
@@ -19,4 +19,9 @@ setup(
     classifiers = [],
     tests_require=tests_require,
     test_suite="nose.collector",
+    entry_points = {
+        'console_scripts': [
+            'proquint = proquint.__main__:main'
+        ],
+    }
 )
