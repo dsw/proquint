@@ -52,8 +52,12 @@ def quint2uint(quint):
     :param quint: proquint string identifier to decode
     :return: 32-bit integer representation of the proquint encoded value
     """
+    nchar = len(quint)
+    if nchar < 10 or nchar > 11:
+        raise ValueError('Proquint should be in form of two quintets + optional separator')
+
     res = 0
-    for c in quint:
+    for i, c in enumerate(quint):
         mag = CONSONANT_TO_UINT.get(c)
         if mag is not None:
             res <<= 4
@@ -63,4 +67,6 @@ def quint2uint(quint):
             if mag is not None:
                 res <<= 2
                 res += mag
+            elif i != 5:
+                raise ValueError('Bad proquint format')
     return res
