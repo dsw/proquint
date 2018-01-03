@@ -31,19 +31,18 @@ IPv4 address strings. Installs a script 'proquint', which can be used
 to convert between above representations via command line
 (see python/README.md)
 
-Run "make clean all check" to build and check everything.  After that
-you can run "make demo" for a simple demo and "make examples" for more
-examples.
-
 Javascript implementation: The code is in js/proquint.js. 
 Try it in js/proquint.html for values of arbitrary length.
 Demo is accessible as github page: 
 http://l-ra.github.io/proquint/js/proquint.html
 
+Run "make clean all check" to build and check everything.  After that
+you can run "make demo" for a simple demo and "make examples" for more
+examples.
+
 See License.txt for copyright and terms of use.
 
 The proquint home is http://github.com/dsw/proquint.
-Fork with Javascript implementation is https://github.com/l-ra/proquint.
 
 Enjoy.
 
