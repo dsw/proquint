@@ -5,18 +5,17 @@
 
                          Daniel S. Wilkerson
 
-9 January 2009: initial release
-8 April 2012: Java implementation
-30 December 2015: Javascript implementation by Luděk Rašek
-3 October 2017: Python implementation by Ruslan Shestopalyuk
-
 Welcome!
 
 Please see the article on proquints: http://arXiv.org/html/0901.4016;
 A local copy is in proquint-proposal.txt and this can be converted to
 proquint-proposal.gen.html by typing "make".
 
-Local implementations:
+For the C and Java implementations: run "make clean all check" to
+build and check.  After that you can run "make demo" for a simple demo
+and "make examples" for more examples.
+
+Local implementations by Daniel S. Wilkerson:
 
  * C implementation: proquint.c converts between proquint, hex, and
    decimal strings.
@@ -24,36 +23,40 @@ Local implementations:
  * Java implementation: Proquint.java converts between proquint, hex,
    and decimal strings.
 
- * Python implementation: converts between proquint, hex, decimal and
-   IPv4 address strings. Installs a script 'proquint', which can be
-   used to convert between above representations via command line (see
-   python/README.md)
+Local implementations by others:
 
-Other implementations:
+ * Python implementation by Ruslan Shestopalyuk: converts between
+   proquint, hex, decimal and IPv4 address strings. Installs a script
+   'proquint', which can be used to convert between above
+   representations via command line (see python/README.md)
 
- * Elixir implemenation: Converts binaries to proquint encoded
-   strings, Decodes proquint encode strings to
+ * Javascript implementation by Luděk Rašek: The code is in
+   js/proquint.js.  Try it in js/proquint.html for values of arbitrary
+   length.  Demo is accessible as github page:
+   http://l-ra.github.io/proquint/js/proquint.html
+
+Remote implementations by others:
+
+ * Elixir implementation by Khaja Minhajuddin: Converts binaries to
+   proquint encoded strings, Decodes proquint encode strings to
    binaries. Implementation can be found at
    https://hexdocs.pm/proquint/Proquint.html
 
- * Perl implementation: Can also be installed from CPAN with cpan
-   Proquint (or +cpanm+ if one has it installed).
+ * Perl implementation by Mark Lawrence: Can also be installed from
+   CPAN with cpan Proquint (or +cpanm+ if one has it installed).
    https://github.com/mlawren/p5-Proquint
-
- * Javascript implementation: The code is in js/proquint.js.  Try it
-   in js/proquint.html for values of arbitrary length.  Demo is
-   accessible as github page:
-   http://l-ra.github.io/proquint/js/proquint.html
-
-Run "make clean all check" to build and check everything.  After that
-you can run "make demo" for a simple demo and "make examples" for more
-examples.
 
 See License.txt for copyright and terms of use.
 
 The proquint home is http://github.com/dsw/proquint.
 
+History:
+
+ * 9 January 2009: initial release
+ * 8 April 2012: add Java implementation
+ * 30 December 2015: add Javascript implementation by Luděk Rašek
+ * 3 October 2017: add Python implementation by Ruslan Shestopalyuk
+
 Enjoy.
 
   -- Daniel
-
