@@ -45,6 +45,10 @@ Remote implementations by others:
  * Perl implementation by Mark Lawrence: Can also be installed from
    CPAN with cpan Proquint (or +cpanm+ if one has it installed).
    https://github.com/mlawren/p5-Proquint
+   
+ * Rust implementation by Christian Blades: Crate at
+   https://crates.io/crates/proquint, source at
+   https://github.com/christian-blades-cb/proquint-rs
 
 See License.txt for copyright and terms of use.
 
