@@ -43,8 +43,10 @@ Remote implementations by others:
    https://hexdocs.pm/proquint/Proquint.html
    
  * Elm implimentation:
-   https://package.elm-lang.org/packages/michaelglass/proquint/latest/Proquint
-   https://github.com/michaelglass/proquint
+   - Install with `elm install michaelglass/proquint`.
+   - Docs are here:
+   https://package.elm-lang.org/packages/michaelglass/proquint/latest/Proquint.
+
 
  * Perl implementation by Mark Lawrence: Can also be installed from
    CPAN with cpan Proquint (or +cpanm+ if one has it installed).
