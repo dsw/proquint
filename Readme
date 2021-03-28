@@ -41,6 +41,12 @@ Remote implementations by others:
    proquint encoded strings, Decodes proquint encode strings to
    binaries. Implementation can be found at
    https://hexdocs.pm/proquint/Proquint.html
+   
+ * Elm implimentation:
+   - Install with `elm install michaelglass/proquint`.
+   - Docs are here:
+   https://package.elm-lang.org/packages/michaelglass/proquint/latest/Proquint.
+
 
  * Perl implementation by Mark Lawrence: Can also be installed from
    CPAN with cpan Proquint (or +cpanm+ if one has it installed).
