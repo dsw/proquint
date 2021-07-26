@@ -15,12 +15,10 @@ public class ProquintMain {
       C rather than use the Java libraries so the behavior would be
       the same).
   */
-  public static int my_atoi(int base, Reader s) throws IOException {
+  public static int my_atoi(int base, String s) throws IOException {
     long ret = 0;
 
-    while(true) {
-      final int c = s.read();
-      if (c == -1) break;
+    for (char c : s.toCharArray()) {
       int value = -1;
 
       switch(c) {
@@ -46,8 +44,7 @@ public class ProquintMain {
 
         /* illegal characters */
       default:
-        System.err.println("Illegal character in uint-word: '"+ (char) c+
-                           "'.");
+        System.err.println("Illegal character in uint-word: '"+ c + "'.");
         System.exit(1);
         break;
       }
@@ -59,7 +56,7 @@ public class ProquintMain {
       if (value >= base) {
         System.err.println
           ("Numbers of base "+ base+
-           " may not contain the digit '"+ (char) c+ "'.");
+           " may not contain the digit '"+ c + "'.");
         System.exit(1);
       }
 
@@ -79,29 +76,21 @@ public class ProquintMain {
     return (int) ret;
   }
 
-  public static void main_convertNumber(int base, Reader s)
-    throws IOException
-  {
-    /* Length of a 32-bit quint word, without trailing NUL:
-       two quints plus a separator. */
-    final int QUINT_LEN = 5*2 + 1;
-    /* Double length plus another separator in case we switch to
-       64-bits. */
-    final int DOUBLE_QUINT_LEN = 2*QUINT_LEN + 1;
+  public static void main_convertNumber(int base, String s)
+    throws IOException {
+    //my_atoi could be replaced with:
+    //final int n = Integer.parseUnsignedInt(s, base);
 
     // this seems to be the best place to chop the precision
     final int n = my_atoi(base, s);
-    StringBuffer quint = new StringBuffer(DOUBLE_QUINT_LEN+1);
-    Proquint.uint2quint(quint, n, '-');
+    String quint = Proquint.uint2quint(n, "-");
 
-    /* fprintf(stderr, "uint %s -> quint %s\n", s, quint); */
-    System.out.print(quint.toString()+ " ");
+    System.out.printf("uint %s -> quint %s\n", s, quint);
   }
 
-  public static void main_convertQuint(Reader s) throws IOException {
+  public static void main_convertQuint(String s) throws IOException {
     long uint0 = Proquint.quint2uint(s);
-    /* fprintf(stderr, "quint %s -> uint %u = x%x\n", s, uint0, uint0); */
-    System.out.print("x"+ Long.toHexString(uint0)+ " ");
+    System.out.printf("quint %s -> uint %d = x%x\n", s, uint0, uint0);
   }
 
   /* Convert command-line strings.
@@ -118,13 +107,13 @@ public class ProquintMain {
         System.exit(1);
       } else if (s0 == 'x' || s0 == 'X') {
         /* a hexadecimal number */
-        main_convertNumber(16, new StringReader(s.substring(1)));
+        main_convertNumber(16, s.substring(1));
       } else if (Character.isDigit(s0)) {
         /* a decimal number */
-        main_convertNumber(10, new StringReader(s));
+        main_convertNumber(10, s);
       } else {
         /* a quint word */
-        main_convertQuint(new StringReader(s));
+        main_convertQuint(s);
       }
     }
 
