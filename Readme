@@ -55,6 +55,8 @@ Remote implementations by others:
  * Rust implementation by Christian Blades: Crate at
    https://crates.io/crates/proquint, source at
    https://github.com/christian-blades-cb/proquint-rs
+   
+ * Go implementation by Nat Welch: https://github.com/icco/proquint
 
 See License.txt for copyright and terms of use.
 
