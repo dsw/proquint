@@ -54,17 +54,17 @@ check-dquad-hex:
 
 .PHONY: check-proquint
 check-proquint:
-	./dquad-hex 127.0.0.1 63.84.220.193 | xargs ./proquint >> check_out.txt
-	./proquint lusab-babad gutih-tugad | xargs ./dquad-hex >> check_out.txt
+	./dquad-hex 127.0.0.1 63.84.220.193 255.255.255.255 | xargs ./proquint >> check_out.txt
+	./proquint lusab-babad gutih-tugad zuzuz-zuzuz | xargs ./dquad-hex >> check_out.txt
 
 .PHONY: check-proquint-java
 check-proquint-java:
-	./dquad-hex 127.0.0.1 63.84.220.193 | xargs java ProquintMain >> check_out.txt
-	java ProquintMain lusab-babad gutih-tugad | xargs ./dquad-hex >> check_out.txt
+	./dquad-hex 127.0.0.1 63.84.220.193 255.255.255.255 | xargs java ProquintMain >> check_out.txt
+	java ProquintMain lusab-babad gutih-tugad zuzuz-zuzuz | xargs ./dquad-hex >> check_out.txt
 
 .PHONY: check
 check: clean-out check-dquad-hex check-proquint check-proquint-java
-	diff check_out.txt check_cor.txt
+	diff -u check_cor.txt check_out.txt
 
 COMPUTER_ORG_IP := 63.84.220.193
 COMPUTER_ORG_PQ := gutih-tugad

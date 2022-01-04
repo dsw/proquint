@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# handy for accepting regression test output
+
+cp $2 $1

@@ -11,7 +11,7 @@ import java.io.*;
 public class Proquint {
 
   /** Map uints to consonants. */
-  static final char uint2consonant[] = {
+  static final char uint2cons[] = {
     'b', 'd', 'f', 'g',
     'h', 'j', 'k', 'l',
     'm', 'n', 'p', 'r',
@@ -23,45 +23,42 @@ public class Proquint {
     'a', 'i', 'o', 'u'
   };
 
-  /** Convert an unsigned int to a proquint; the output is appended to
-   * quint; sepChar will be omitted if -1. */
+  /** Convert an unsigned int (actually a long int) to a proquint; the
+   * output is appended to quint; sepChar will be omitted if -1. */
   static void uint2quint
-    (StringBuffer quint /*output*/, int i, char sepChar)
+    (StringBuffer quint /*output*/, long i, char sepChar)
   {
     // http://docs.oracle.com/javase/tutorial/java/nutsandbolts/opsummary.html
     // ">>>" Unsigned right shift
-    int j;
+    long j;
 
-    final int MASK_FIRST4 = 0xF0000000;
-    final int MASK_FIRST2 = 0xC0000000;
-
-    j = i & MASK_FIRST4; i <<= 4; j >>>= 28; quint.append(uint2consonant[j]);
-    j = i & MASK_FIRST2; i <<= 2; j >>>= 30; quint.append(uint2vowel[j]);
-    j = i & MASK_FIRST4; i <<= 4; j >>>= 28; quint.append(uint2consonant[j]);
-    j = i & MASK_FIRST2; i <<= 2; j >>>= 30; quint.append(uint2vowel[j]);
-    j = i & MASK_FIRST4; i <<= 4; j >>>= 28; quint.append(uint2consonant[j]);
+    j = (i >>> 28) & 0XF; i <<= 4; quint.append(uint2cons [(int)j]);
+    j = (i >>> 30) & 0X3; i <<= 2; quint.append(uint2vowel[(int)j]);
+    j = (i >>> 28) & 0XF; i <<= 4; quint.append(uint2cons [(int)j]);
+    j = (i >>> 30) & 0X3; i <<= 2; quint.append(uint2vowel[(int)j]);
+    j = (i >>> 28) & 0XF; i <<= 4; quint.append(uint2cons [(int)j]);
 
     if (sepChar != -1) {
       quint.append(((char) sepChar));
     }
 
-    j = i & MASK_FIRST4; i <<= 4; j >>>= 28; quint.append(uint2consonant[j]);
-    j = i & MASK_FIRST2; i <<= 2; j >>>= 30; quint.append(uint2vowel[j]);
-    j = i & MASK_FIRST4; i <<= 4; j >>>= 28; quint.append(uint2consonant[j]);
-    j = i & MASK_FIRST2; i <<= 2; j >>>= 30; quint.append(uint2vowel[j]);
-    j = i & MASK_FIRST4; i <<= 4; j >>>= 28; quint.append(uint2consonant[j]);
+    j = (i >>> 28) & 0XF; i <<= 4; quint.append(uint2cons [(int)j]);
+    j = (i >>> 30) & 0X3; i <<= 2; quint.append(uint2vowel[(int)j]);
+    j = (i >>> 28) & 0XF; i <<= 4; quint.append(uint2cons [(int)j]);
+    j = (i >>> 30) & 0X3; i <<= 2; quint.append(uint2vowel[(int)j]);
+    j = (i >>> 28) & 0XF; i <<= 4; quint.append(uint2cons [(int)j]);
   }
 
-  /** Convert a proquint to an unsigned int (long).
+  /** Convert a proquint to an unsigned int (actually a long int).
    */
   static long quint2uint(Reader quint) throws IOException {
     long res = 0;
 
     while(true) {
-      final int c = quint.read();
+      final long c = quint.read();
       if (c == -1) break;
 
-      switch(c) {
+      switch((int)c) {
 
         /* consonants */
       case 'b': res <<= 4; res +=  0; break;

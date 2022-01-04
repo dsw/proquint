@@ -11,19 +11,19 @@ import java.io.*;
 public class ProquintMain {
 
   /** My atoi; it's easier to write it than to figure out how to get
-      the libraries to parse a string into an unsigned int (Copied the
-      C rather than use the Java libraries so the behavior would be
-      the same).
+      the libraries to parse a string into an unsigned int (actually a
+      long int) (Copied the C rather than use the Java libraries so
+      the behavior would be the same).
   */
-  public static int my_atoi(int base, Reader s) throws IOException {
+  public static long my_atoi(long base, Reader s) throws IOException {
     long ret = 0;
 
     while(true) {
-      final int c = s.read();
+      final long c = s.read();
       if (c == -1) break;
-      int value = -1;
+      long value = -1;
 
-      switch(c) {
+      switch((int)c) {
         /* decimal digits */
       case '0': value = 0; break;
       case '1': value = 1; break;
@@ -67,31 +67,22 @@ public class ProquintMain {
       ret += value;
     }
 
-    if (ret < 0) {
-      System.err.println("ret < 0: This cannot happen.");
-      System.exit(1);
-    }
-    if (ret > Integer.MAX_VALUE) {
-      System.err.println
-        ("Numerical value of String exceeds Integer.MAX_VALUE.");
-        System.exit(1);
-    }
-    return (int) ret;
+    return ret;
   }
 
-  public static void main_convertNumber(int base, Reader s)
+  public static void main_convertNumber(long base, Reader s)
     throws IOException
   {
     /* Length of a 32-bit quint word, without trailing NUL:
        two quints plus a separator. */
-    final int QUINT_LEN = 5*2 + 1;
+    final long QUINT_LEN = 5*2 + 1;
     /* Double length plus another separator in case we switch to
        64-bits. */
-    final int DOUBLE_QUINT_LEN = 2*QUINT_LEN + 1;
+    final long DOUBLE_QUINT_LEN = 2*QUINT_LEN + 1;
 
     // this seems to be the best place to chop the precision
-    final int n = my_atoi(base, s);
-    StringBuffer quint = new StringBuffer(DOUBLE_QUINT_LEN+1);
+    final long n = my_atoi(base, s);
+    StringBuffer quint = new StringBuffer((int)(DOUBLE_QUINT_LEN+1));
     Proquint.uint2quint(quint, n, '-');
 
     /* fprintf(stderr, "uint %s -> quint %s\n", s, quint); */
@@ -108,7 +99,7 @@ public class ProquintMain {
    */
   public static void main(String args[]) throws IOException {
     for (String s : args) {
-      final int s0 = s.charAt(0);
+      final long s0 = s.charAt(0);
       if (s0 == '0') {
         System.err.print
           ("Do not lead input strings with a zero.\n"+
@@ -119,7 +110,7 @@ public class ProquintMain {
       } else if (s0 == 'x' || s0 == 'X') {
         /* a hexadecimal number */
         main_convertNumber(16, new StringReader(s.substring(1)));
-      } else if (Character.isDigit(s0)) {
+      } else if (Character.isDigit((int)s0)) {
         /* a decimal number */
         main_convertNumber(10, new StringReader(s));
       } else {
