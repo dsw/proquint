@@ -57,6 +57,8 @@ Remote implementations by others:
    https://github.com/christian-blades-cb/proquint-rs
    
  * Go implementation by Nat Welch: https://github.com/icco/proquint
+ 
+ * Haskell implementation by Francesco Gazzetta: https://hackage.haskell.org/package/proquint
 
 See License.txt for copyright and terms of use.
 
