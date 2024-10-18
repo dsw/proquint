@@ -13,7 +13,7 @@ proquint-proposal.gen.html by typing "make".
 
 For the C and Java implementations: run "make clean all check" to
 build and check.  After that you can run "make demo" for a simple demo
-and "make examples" for more examples. Run "make proquint" for C only.
+and "make examples" for more examples.  Run "make proquint" for C only.
 
 Local implementations by Daniel S. Wilkerson:
 
